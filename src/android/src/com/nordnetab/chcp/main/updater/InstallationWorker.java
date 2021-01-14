@@ -203,23 +203,23 @@ class InstallationWorker implements WorkerTask {
         }
 
         boolean isValid = true;
-        List<ManifestFile> updateFileList = manifestDiff.getUpdateFiles();
+        // List<ManifestFile> updateFileList = manifestDiff.getUpdateFiles();
 
-        for (ManifestFile updatedFile : updateFileList) {
-            File file = new File(downloadFolder, updatedFile.name);
+        // for (ManifestFile updatedFile : updateFileList) {
+        //     File file = new File(downloadFolder, updatedFile.name);
 
-            try {
-                if (!file.exists() ||
-                        !FilesUtility.calculateFileHash(file).equals(updatedFile.hash)) {
-                    isValid = false;
-                    break;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                isValid = false;
-                break;
-            }
-        }
+        //     try {
+        //         if (!file.exists() ||
+        //                 !FilesUtility.calculateFileHash(file).equals(updatedFile.hash)) {
+        //             isValid = false;
+        //             break;
+        //         }
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //         isValid = false;
+        //         break;
+        //     }
+        // }
 
         return isValid;
     }
