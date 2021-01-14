@@ -645,34 +645,14 @@ public class HotCodePushPlugin extends CordovaPlugin {
 
         // make sure, that index page exists
         String external = Paths.get(fileStructure.getWwwFolder(), strippedIndexPage);
+
         if (!new File(external).exists()) {
             Log.d("CHCP", "External starting page not found. Aborting page change.");
             return;
         }
-        try {
-            Log.d("CHCP", "begin restart app");
-            String basePath = fileStructure.getWwwFolder();
-            // 尝试重置本地服务器根目录为当前热更新后的外置存储路径
-            Class[] cArg = new Class[1];
-            cArg[0] = String.class;
-            webView.getEngine().getClass().getDeclaredMethod("setServerBasePath", cArg).invoke(webView.getEngine(),
-                    basePath);
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
 
-        }
+        external = Paths.get(fileStructure.getWwwFolder(), indexPage);
+        webView.loadUrlIntoView(FILE_PREFIX + external, false);
 
         Log.d("CHCP", "Loading external page: " + external);
     }
