@@ -278,24 +278,48 @@ static NSString *const DEFAULT_STARTING_PAGE = @"index.html";
  */
 - (void)resetIndexPageToExternalStorage {
     NSString *indexPageStripped = [self indexPageFromConfigXml];
-    
+
     NSRange r = [indexPageStripped rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"?#"] options:0];
     if (r.location != NSNotFound) {
         indexPageStripped = [indexPageStripped substringWithRange:NSMakeRange(0, r.location)];
     }
-    
+
     NSURL *indexPageExternalURL = [self appendWwwFolderPathToPath:indexPageStripped];
     if (![[NSFileManager defaultManager] fileExistsAtPath:indexPageExternalURL.path]) {
         return;
     }
-    
+
     // rewrite starting page www folder path: should load from external storage
     if ([self.viewController isKindOfClass:[CDVViewController class]]) {
-        [self switchServerBaseToExternalPath];
+        ((CDVViewController *)self.viewController).wwwFolderName = _filesStructure.wwwFolder.absoluteString;
     } else {
         NSLog(@"HotCodePushError: Can't make starting page to be from external storage. Main controller should be of type CDVViewController.");
     }
 }
+
+/**
+ *  Redirect user to the index page that is located on the external storage.
+ */
+// - (void)resetIndexPageToExternalStorage {
+//    NSString *indexPageStripped = [self indexPageFromConfigXml];
+//    
+//    NSRange r = [indexPageStripped rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"?#"] options:0];
+//    if (r.location != NSNotFound) {
+//        indexPageStripped = [indexPageStripped substringWithRange:NSMakeRange(0, r.location)];
+//    }
+//    
+//    NSURL *indexPageExternalURL = [self appendWwwFolderPathToPath:indexPageStripped];
+//    if (![[NSFileManager defaultManager] fileExistsAtPath:indexPageExternalURL.path]) {
+//        return;
+//    }
+//    
+//    // rewrite starting page www folder path: should load from external storage
+//    if ([self.viewController isKindOfClass:[CDVViewController class]]) {
+//        [self switchServerBaseToExternalPath];
+//    } else {
+//        NSLog(@"HotCodePushError: Can't make starting page to be from external storage. Main controller should be of type CDVViewController.");
+//    }
+//}
 
 /**
  * 切换本地服务根目录到外存储目录
