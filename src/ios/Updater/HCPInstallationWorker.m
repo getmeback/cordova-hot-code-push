@@ -170,27 +170,27 @@
     *error = nil;
     NSString *errorMsg = nil;
     
-    NSArray *updateFileList = _manifestDiff.updateFileList;
-    for (HCPManifestFile *updatedFile in updateFileList) {
-        // Force the release of the memory allocated to calculate the MD5 hash
-        @autoreleasepool {
-            NSURL *fileLocalURL = [_newReleaseFS.downloadFolder URLByAppendingPathComponent:updatedFile.name isDirectory:NO];
-            if (![_fileManager fileExistsAtPath:fileLocalURL.path]) {
-                errorMsg = [NSString stringWithFormat:@"Update validation error! File not found: %@", updatedFile.name];
-                break;
-            }
+//     NSArray *updateFileList = _manifestDiff.updateFileList;
+//     for (HCPManifestFile *updatedFile in updateFileList) {
+//         // Force the release of the memory allocated to calculate the MD5 hash
+//         @autoreleasepool {
+//             NSURL *fileLocalURL = [_newReleaseFS.downloadFolder URLByAppendingPathComponent:updatedFile.name isDirectory:NO];
+//             if (![_fileManager fileExistsAtPath:fileLocalURL.path]) {
+//                 errorMsg = [NSString stringWithFormat:@"Update validation error! File not found: %@", updatedFile.name];
+//                 break;
+//             }
             
-            NSString *fileMD5 = [[NSData dataWithContentsOfURL:fileLocalURL] md5];
-            if (![fileMD5 isEqualToString:updatedFile.md5Hash]) {
-                errorMsg = [NSString stringWithFormat:@"Update validation error! File's %@ hash %@ doesnt match the hash %@ from manifest file", updatedFile.name, fileMD5, updatedFile.md5Hash];
-                break;
-            }
-        }
-    }
+//             NSString *fileMD5 = [[NSData dataWithContentsOfURL:fileLocalURL] md5];
+//             if (![fileMD5 isEqualToString:updatedFile.md5Hash]) {
+//                 errorMsg = [NSString stringWithFormat:@"Update validation error! File's %@ hash %@ doesnt match the hash %@ from manifest file", updatedFile.name, fileMD5, updatedFile.md5Hash];
+//                 break;
+//             }
+//         }
+//     }
     
-    if (errorMsg) {
-        *error = [NSError errorWithCode:kHCPUpdateIsInvalidErrorCode description:errorMsg];
-    }
+//     if (errorMsg) {
+//         *error = [NSError errorWithCode:kHCPUpdateIsInvalidErrorCode description:errorMsg];
+//     }
     
     return (*error == nil);
 }
